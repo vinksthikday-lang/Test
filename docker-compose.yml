@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  bot:
+    build: .
+    container_name: discord_bot_pro
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    depends_on:
+      - mongodb
+      - redis
+    networks:
+      - bot_network
+
+  web:
+    build: .
+    container_name: bot_dashboard
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      - mongodb
+      - redis
+    networks:
+      - bot_network
+    command: python src/web/app.py
+
+  mongodb:
+    image: mongo:6.0
+    container_name: bot_mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER:-admin}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD:-password}
+    volumes:
+      - mongodb_data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - bot_network
+
+  redis:
+    image: redis:7-alpine
+    container_name: bot_redis
+    restart: unless-stopped
+    command: redis-server --requirepass ${REDIS_PASSWORD:-your_redis_password}
+    volumes:
+      - redis_data:/data
+    networks:
+      - bot_network
+
+volumes:
+  mongodb_data:
+  redis_data:
+
+networks:
+  bot_network:
+    driver: bridge

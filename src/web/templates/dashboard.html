@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bot Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <!-- Navigation -->
+    <nav class="bg-indigo-600 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-4">
+                    <i class="fab fa-discord text-2xl"></i>
+                    <h1 class="text-xl font-bold">Bot Dashboard</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span>Welcome, {{ user.username }}</span>
+                    <a href="/logout" class="bg-indigo-700 hover:bg-indigo-800 px-4 py-2 rounded">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div class="px-4 py-6 sm:px-0">
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white overflow-hidden shadow rounded-lg">
+                    <div class="px-4 py-5 sm:p-6">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 bg-indigo-500 rounded-md p-3">
+                                <i class="fas fa-server text-white"></i>
+                            </div>
+                            <div class="ml-5 w-0 flex-1">
+                                <dl>
+                                    <dt class="text-sm font-medium text-gray-500 truncate">Servers</dt>
+                                    <dd class="text-lg font-medium text-gray-900" id="servers-count">Loading...</dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white overflow-hidden shadow rounded-lg">
+                    <div class="px-4 py-5 sm:p-6">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 bg-green-500 rounded-md p-3">
+                                <i class="fas fa-users text-white"></i>
+                            </div>
+                            <div class="ml-5 w-0 flex-1">
+                                <dl>
+                                    <dt class="text-sm font-medium text-gray-500 truncate">Total Users</dt>
+                                    <dd class="text-lg font-medium text-gray-900" id="users-count">Loading...</dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white overflow-hidden shadow rounded-lg">
+                    <div class="px-4 py-5 sm:p-6">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 bg-blue-500 rounded-md p-3">
+                                <i class="fas fa-robot text-white"></i>
+                            </div>
+                            <div class="ml-5 w-0 flex-1">
+                                <dl>
+                                    <dt class="text-sm font-medium text-gray-500 truncate">Uptime</dt>
+                                    <dd class="text-lg font-medium text-gray-900" id="uptime-count">Loading...</dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white overflow-hidden shadow rounded-lg">
+                    <div class="px-4 py-5 sm:p-6">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 bg-purple-500 rounded-md p-3">
+                                <i class="fas fa-bolt text-white"></i>
+                            </div>
+                            <div class="ml-5 w-0 flex-1">
+                                <dl>
+                                    <dt class="text-sm font-medium text-gray-500 truncate">Commands Today</dt>
+                                    <dd class="text-lg font-medium text-gray-900" id="commands-count">Loading...</dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white shadow rounded-lg">
+                    <div class="px-4 py-5 sm:px-6 border-b border-gray-200">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900">Quick Actions</h3>
+                    </div>
+                    <div class="px-4 py-5 sm:p-6">
+                        <div class="grid grid-cols-2 gap-4">
+                            <button class="bg-green-500 text-white p-4 rounded-lg hover:bg-green-600 transition">
+                                <i class="fas fa-sync-alt mb-2"></i>
+                                <p>Restart Bot</p>
+                            </button>
+                            <button class="bg-blue-500 text-white p-4 rounded-lg hover:bg-blue-600 transition">
+                                <i class="fas fa-cog mb-2"></i>
+                                <p>Settings</p>
+                            </button>
+                            <button class="bg-purple-500 text-white p-4 rounded-lg hover:bg-purple-600 transition">
+                                <i class="fas fa-chart-bar mb-2"></i>
+                                <p>Analytics</p>
+                            </button>
+                            <button class="bg-red-500 text-white p-4 rounded-lg hover:bg-red-600 transition">
+                                <i class="fas fa-shield-alt mb-2"></i>
+                                <p>Security</p>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white shadow rounded-lg">
+                    <div class="px-4 py-5 sm:px-6 border-b border-gray-200">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900">System Status</h3>
+                    </div>
+                    <div class="px-4 py-5 sm:p-6">
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <span>Bot Status</span>
+                                <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">Online</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span>Database</span>
+                                <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">Connected</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span>API</span>
+                                <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">Running</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span>Last Backup</span>
+                                <span class="text-sm text-gray-500">2 hours ago</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load stats on page load
+        async function loadStats() {
+            try {
+                const response = await fetch('/api/stats');
+                const data = await response.json();
+                
+                document.getElementById('servers-count').textContent = data.servers;
+                document.getElementById('users-count').textContent = data.users;
+                document.getElementById('uptime-count').textContent = data.uptime;
+                document.getElementById('commands-count').textContent = data.commands;
+            } catch (error) {
+                console.error('Failed to load stats:', error);
+            }
+        }
+
+        // Update stats every 30 seconds
+        loadStats();
+        setInterval(loadStats, 30000);
+    </script>
+</body>
+</html>
